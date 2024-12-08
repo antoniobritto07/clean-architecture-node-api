@@ -1,12 +1,12 @@
 import type { Config } from "jest"
 
 const config: Config = {
-  roots: ["<rootDir>/src"],
-  collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
+  roots: ["<rootDir>/src/"],
+  collectCoverageFrom: ["<rootDir>/src/**/*.{ts,js}"],
   coverageDirectory: "coverage",
   testEnvironment: "node",
   transform: {
-    ".+\\.ts$": "ts-jest",
+    "^.+\\.ts$": "ts-jest",
   },
   coverageProvider: "v8",
 }
