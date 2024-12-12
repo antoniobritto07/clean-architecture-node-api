@@ -20,6 +20,7 @@ export default [
       ...tseslint.configs.recommended.rules,
       "prettier/prettier": "error",
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
     },
   },
 ]
