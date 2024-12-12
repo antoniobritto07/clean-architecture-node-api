@@ -6,10 +6,11 @@ import { EmailValidator } from "../protocols/emailValidator"
 import { InvalidParamError } from "../errors/invalid-param-error"
 
 export class SignUpController implements Controller {
-  private readonly emailValidator: EmailValidator
   //this implements() forces all the controllers to follow the same pattern
+  private readonly emailValidator: EmailValidator
 
   constructor(emailValidator: EmailValidator) {
+    //example of dependency inversion
     this.emailValidator = emailValidator
   }
   handle(httpRequest: HttpRequest): HttpResponse {

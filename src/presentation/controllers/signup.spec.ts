@@ -18,7 +18,7 @@ const makeSut = (): SutTypes => {
     }
   }
   const emailValidatorStub = new EmailValidatorStub()
-  const sut = new SignUpController(emailValidatorStub)
+  const sut = new SignUpController(emailValidatorStub) //example of dependency injection
 
   return {
     sut,
