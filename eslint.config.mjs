@@ -19,6 +19,7 @@ export default [
       ...pluginJs.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
       "prettier/prettier": "error",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ]
