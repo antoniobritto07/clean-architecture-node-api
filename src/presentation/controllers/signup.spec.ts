@@ -1,9 +1,7 @@
 import { describe, expect, test, jest } from "@jest/globals"
 import { SignUpController } from "./signup"
-import { MissingParamError } from "../errors/missing-param-error"
-import { InvalidParamError } from "../errors/invalid-param-error"
 import { EmailValidator } from "../protocols/emailValidator"
-import { ServerError } from "../errors/server-error"
+import { ServerError, InvalidParamError, MissingParamError } from "../errors"
 
 interface SutTypes {
   sut: SignUpController
