@@ -1,9 +1,12 @@
 import { describe, expect, test, jest } from "@jest/globals"
+import {
+  EmailValidator,
+  AddAccount,
+  AddAccountModel,
+  AccountModel,
+} from "./signup-protocols"
 import { SignUpController } from "./signup"
-import { EmailValidator } from "../protocols"
-import { ServerError, InvalidParamError, MissingParamError } from "../errors"
-import { AddAccount, AddAccountModel } from "../../domain/usecases/add-account"
-import { AccountModel } from "../../domain/models/account"
+import { ServerError, InvalidParamError, MissingParamError } from "../../errors"
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {

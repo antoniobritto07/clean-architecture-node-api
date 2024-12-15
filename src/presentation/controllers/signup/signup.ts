@@ -3,10 +3,10 @@ import {
   HttpRequest,
   Controller,
   EmailValidator,
-} from "../protocols"
-import { badRequest, serverError } from "../helpers/http-helper"
-import { InvalidParamError, MissingParamError } from "../errors"
-import { AddAccount } from "../../domain/usecases/add-account"
+} from "./signup-protocols"
+import { badRequest, serverError } from "../../helpers/http-helper"
+import { InvalidParamError, MissingParamError } from "../../errors"
+import { AddAccount } from "../../../domain/usecases/add-account"
 
 export class SignUpController implements Controller {
   //this implements() forces all the controllers to follow the same pattern
