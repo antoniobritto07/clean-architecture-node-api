@@ -199,9 +199,8 @@ describe("SignUp Controller", () => {
   })
 
   test("should return 500 if AddAccount throws", () => {
-    const { sut, emailValidatorStub } = makeSut()
-    //manually mocking the stub default isValid implementation to make it return an error
-    jest.spyOn(emailValidatorStub, "isValid").mockImplementationOnce(() => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, "add").mockImplementationOnce(() => {
       throw new Error()
     })
     const httpRequest = {
@@ -215,5 +214,25 @@ describe("SignUp Controller", () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test("should return 200 if valid data is provided", () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: "valid_name",
+        email: "valid_email@email.com",
+        password: "valid_password",
+        passwordConfirmation: "valid_password",
+      },
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: "valid_id",
+      name: "valid_name",
+      email: "valid_email@email.com",
+      password: "valid_password",
+    })
   })
 })
