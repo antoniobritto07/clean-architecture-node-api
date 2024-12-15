@@ -1,7 +1,10 @@
-import { HttpResponse, HttpRequest } from "../protocols/http"
-import { Controller } from "../protocols/controller"
+import {
+  HttpResponse,
+  HttpRequest,
+  Controller,
+  EmailValidator,
+} from "../protocols"
 import { badRequest, serverError } from "../helpers/http-helper"
-import { EmailValidator } from "../protocols/emailValidator"
 import { InvalidParamError, MissingParamError } from "../errors"
 
 export class SignUpController implements Controller {
