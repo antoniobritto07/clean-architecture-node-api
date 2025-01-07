@@ -35,4 +35,24 @@ describe("DbAddAccount Usecase", () => {
     await sut.add(accountData)
     expect(encryptSpy).toHaveBeenCalledWith("valid_password")
   })
+
+  // this test is to make sure that any try-catch will be added to the add method we have,
+  // making sure that if any error pops up, the error will be passed through to the Presentation layer,
+  // where there the error will be treated and returned as a Server Error.
+  test("should throw if Encrypter throws", async () => {
+    const { sut, encrypterStub } = makeSut()
+    jest
+      .spyOn(encrypterStub, "encrypt")
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      )
+    const accountData = {
+      name: "valid_name",
+      email: "valid_email@email.com",
+      password: "valid_password",
+    }
+
+    const promise = sut.add(accountData)
+    await expect(promise).rejects.toThrow()
+  })
 })
