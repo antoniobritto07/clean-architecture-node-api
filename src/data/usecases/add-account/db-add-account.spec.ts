@@ -1,6 +1,6 @@
 import { describe, expect, test, jest } from "@jest/globals"
 import { DbAddaccount } from "./db-add-account"
-import { Encrypter } from "../../protocols/encrypter"
+import { Encrypter } from "./db-add-account-protocols"
 
 interface SutTypes {
   sut: DbAddaccount
