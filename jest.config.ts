@@ -6,6 +6,7 @@ const config: Config = {
   // testMatch: ["**/*.spec.ts"],  "test" will run only the integration tests, whereas "spec" will run all the unit tests
   coverageDirectory: "coverage",
   testEnvironment: "node",
+  preset: "@shelf/jest-mongodb",
   transform: {
     "^.+\\.ts$": "ts-jest",
   },
