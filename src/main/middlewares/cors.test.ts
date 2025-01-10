@@ -3,7 +3,7 @@ import app from "../config/app"
 import { describe, test } from "@jest/globals"
 
 describe("CORS Middleware", () => {
-  test("should parse body as json", async () => {
+  test("should allow request from outside the application without further problems", async () => {
     app.get("/test_cors", (req, res) => {
       res.send()
     })
