@@ -27,6 +27,7 @@ describe("Account Mongo Repository", () => {
     return new AccountMongoRepository()
   }
 
+  //when dealing with integration tests we don't have the freedom that we were used to have, to test exceptions and other different behaviors.
   test("should return an if of the account created on success", async () => {
     const sut = makeSut()
     const account = await sut.add({
