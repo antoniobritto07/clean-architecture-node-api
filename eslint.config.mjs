@@ -8,8 +8,14 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      globals: {
+        ...globals.browser, // Includes browser-specific globals like window, document
+        ...globals.node, // Includes Node.js-specific globals like process, require
+        myCustomGlobal: "readonly", // Example of a custom global variable
+      },
       parser: tsParser,
-      globals: globals.browser,
     },
     plugins: {
       "@typescript-eslint": tseslint,
