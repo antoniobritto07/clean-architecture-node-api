@@ -13,6 +13,4 @@ describe("Body Parser Middleware", () => {
       .send({ name: "Antonio" })
       .expect({ name: "Antonio" })
   })
-
-  // Add more tests for other routes here...
 })
