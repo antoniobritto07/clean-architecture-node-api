@@ -7,8 +7,10 @@ import {
   ok,
 } from "../../helpers/http-helper"
 import { InvalidParamError, MissingParamError } from "../../errors"
-import { EmailValidator, HttpRequest } from "../signup/signup-protocols"
-import { Authentication } from "../../../domain/usecases/authentication"
+import { HttpRequest, EmailValidator, Authentication } from "./login-protocols"
+
+//the difference between mockImplementationOnce and mockReturnValueOnce is that the first one tries to
+//all the structure of the return of the method. whereas the second one only change what is being returned.
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
