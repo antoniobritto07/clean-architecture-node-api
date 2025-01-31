@@ -5,8 +5,8 @@ import {
   serverError,
   unauthorized,
   ok,
-} from "../../helpers/http-helper"
-import { InvalidParamError, MissingParamError } from "../../errors"
+} from "../../helpers/http/http-helper"
+import { MissingParamError } from "../../errors"
 import { HttpRequest, Authentication, Validation } from "./login-protocols"
 
 //the difference between mockImplementationOnce and mockReturnValueOnce is that the first one tries to
