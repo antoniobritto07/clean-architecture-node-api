@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from "@jest/globals"
+import { describe, expect, test } from "@jest/globals"
 import { RequiredFieldValidation } from "./required-field-validation"
 import { MissingParamError } from "../../errors"
 

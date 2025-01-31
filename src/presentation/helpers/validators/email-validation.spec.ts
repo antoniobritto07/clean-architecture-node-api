@@ -30,7 +30,7 @@ describe("Email Validation", () => {
   test("should call EmailValidator with correct email", () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, "isValid")
-    sut.validate({ email: "any_email@mail.com" })
+    sut.validate({ email: "any_email@email.com" })
     expect(isValidSpy).toHaveBeenCalledWith("any_email@email.com")
   })
 
