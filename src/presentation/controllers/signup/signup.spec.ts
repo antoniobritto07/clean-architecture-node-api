@@ -1,6 +1,5 @@
 import { describe, expect, test, jest } from "@jest/globals"
 import {
-  EmailValidator,
   AddAccount,
   AddAccountModel,
   AccountModel,
@@ -8,18 +7,8 @@ import {
   Validation,
 } from "./signup-protocols"
 import { SignUpController } from "./signup"
-import { ServerError, InvalidParamError, MissingParamError } from "../../errors"
+import { ServerError, MissingParamError } from "../../errors"
 import { ok, serverError, badRequest } from "../../helpers/http-helper"
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    //this isn't a production class, we're injecting a EmailValidator mocked version into our controller
-    isValid(email: string): boolean {
-      //Stub is one Mock type, and basically we attribute an direct value for a function, as in this case (since we're returning true directly)
-      return true
-    }
-  }
-  return new EmailValidatorStub()
-}
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
@@ -41,24 +30,17 @@ const makeValidation = (): Validation => {
 
 interface SutTypes {
   sut: SignUpController
-  emailValidatorStub: EmailValidator
   addAccountStub: AddAccount
   validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator()
   const addAccountStub = makeAddAccount()
   const validationStub = makeValidation()
-  const sut = new SignUpController(
-    emailValidatorStub,
-    addAccountStub,
-    validationStub,
-  ) //example of dependency injection
+  const sut = new SignUpController(addAccountStub, validationStub) //example of dependency injection
 
   return {
     sut,
-    emailValidatorStub,
     addAccountStub,
     validationStub,
   }
@@ -81,23 +63,6 @@ const makeFakeRequest = (): HttpRequest => ({
 })
 
 describe("SignUp Controller", () => {
-  test("should call EmailValidator with correct email", async () => {
-    const { sut, emailValidatorStub } = makeSut()
-    const isValidSpy = jest.spyOn(emailValidatorStub, "isValid")
-    await sut.handle(makeFakeRequest())
-    expect(isValidSpy).toHaveBeenCalledWith("any_email@email.com")
-  })
-
-  test("should return 500 if EmailValidator throws", async () => {
-    const { sut, emailValidatorStub } = makeSut()
-    //manually mocking the stub default isValid implementation to make it return an error
-    jest.spyOn(emailValidatorStub, "isValid").mockImplementationOnce(() => {
-      throw new Error()
-    })
-    const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(serverError(new ServerError(null)))
-  })
-
   test("should call AddAccount with correct values", async () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, "add")
