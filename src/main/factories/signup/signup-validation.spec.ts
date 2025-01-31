@@ -2,7 +2,7 @@ import { describe, expect, test, jest } from "@jest/globals"
 import { makeLoginValidation } from "../login/login-validation"
 import { ValidationComposite } from "../../../presentation/helpers/validators/validation-composite"
 import { RequiredFieldValidation } from "../../../presentation/helpers/validators/required-field-validation"
-import { Validation } from "../../../presentation/helpers/validators/validation"
+import { Validation } from "../../../presentation/protocols/validation"
 import { EmailValidation } from "../../../presentation/helpers/validators/email-validation"
 import { EmailValidator } from "../../../presentation/protocols/email-validator"
 
