@@ -1,6 +1,6 @@
 import { describe, expect, test, jest } from "@jest/globals"
 import { AccountModel } from "../add-account/db-add-account-protocols"
-import { LoadAccountByEmailRepository } from "../../protocols/load-account-by-email-repository"
+import { LoadAccountByEmailRepository } from "../../protocols/db/load-account-by-email-repository"
 import { DbAuthentication } from "./db-authentication"
 import { AuthenticationModel } from "../../../domain/usecases/authentication"
 
