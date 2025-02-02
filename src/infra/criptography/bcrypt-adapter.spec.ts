@@ -69,4 +69,14 @@ describe("SignUp Controller", () => {
 
     expect(isValid).toBe(false)
   })
+  test("should throw if compare throws", async () => {
+    const sut = makeSut()
+    jest
+      .spyOn(bcrypt, "compare")
+      .mockImplementationOnce(() => Promise.reject(new Error()))
+
+    const promise = sut.compare("any_value", "any_hash")
+
+    await expect(promise).rejects.toThrow()
+  })
 })
