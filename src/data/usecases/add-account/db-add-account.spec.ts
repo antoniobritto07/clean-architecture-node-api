@@ -3,18 +3,18 @@ import { DbAddAccount } from "./db-add-account"
 import {
   AccountModel,
   AddAccountModel,
-  Encrypter,
+  Hasher,
 } from "./db-add-account-protocols"
 
 import { AddAccountRepository } from "../../protocols/db/add-account-repository"
 
-const makeEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
-    async encrypt(value: string): Promise<string> {
+const makeHasher = (): Hasher => {
+  class HasherStub implements Hasher {
+    async hash(value: string): Promise<string> {
       return new Promise((resolve) => resolve("hashed_password"))
     }
   }
-  return new EncrypterStub()
+  return new HasherStub()
 }
 
 const makeAddAccountRepository = (): AddAccountRepository => {
@@ -41,21 +41,21 @@ const makeFakeAccountData = (): AddAccountModel => ({
 
 interface SutTypes {
   sut: DbAddAccount
-  encrypterStub: Encrypter
+  hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
 }
 const makeSut = (): SutTypes => {
-  const encrypterStub = makeEncrypter()
+  const hasherStub = makeHasher()
   const addAccountRepositoryStub = makeAddAccountRepository()
-  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub) //dependency injection
+  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub) //dependency injection
 
-  return { sut, encrypterStub, addAccountRepositoryStub }
+  return { sut, hasherStub, addAccountRepositoryStub }
 }
 
 describe("DbAddAccount Usecase", () => {
-  test("should call Encrypter with correct password", async () => {
-    const { sut, encrypterStub } = makeSut()
-    const encryptSpy = jest.spyOn(encrypterStub, "encrypt")
+  test("should call Hasher with correct password", async () => {
+    const { sut, hasherStub } = makeSut()
+    const encryptSpy = jest.spyOn(hasherStub, "hash")
     await sut.add(makeFakeAccountData())
     expect(encryptSpy).toHaveBeenCalledWith("valid_password")
   })
@@ -63,10 +63,10 @@ describe("DbAddAccount Usecase", () => {
   // this test is to make sure that any try-catch will be added to the add method we have,
   // making sure that if any error pops up, the error will be passed through to the Presentation layer,
   // where there the error will be treated and returned as a Server Error.
-  test("should throw if Encrypter throws", async () => {
-    const { sut, encrypterStub } = makeSut()
+  test("should throw if Hasher throws", async () => {
+    const { sut, hasherStub } = makeSut()
     jest
-      .spyOn(encrypterStub, "encrypt")
+      .spyOn(hasherStub, "hash")
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error())),
       )
