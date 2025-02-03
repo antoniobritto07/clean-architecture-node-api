@@ -18,7 +18,7 @@ describe("SignUp Routes", () => {
     accountCollection = await MongoHelper.getCollection("accounts")
     await accountCollection.deleteMany({})
   })
-  test("should return 200 status code on sign up success", async () => {
+  test("should return 200 on sign up success", async () => {
     await request(app)
       .post("/api/signup")
       .send({

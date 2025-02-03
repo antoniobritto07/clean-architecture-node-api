@@ -19,7 +19,7 @@ describe("Login Routes", () => {
     accountCollection = await MongoHelper.getCollection("accounts")
     await accountCollection.deleteMany({})
   })
-  test("should return 200 status code on login", async () => {
+  test("should return 200 on login", async () => {
     const password = await hash("123", 12)
     await accountCollection.insertOne({
       name: "Antonio",
@@ -33,5 +33,15 @@ describe("Login Routes", () => {
         password: "123",
       })
       .expect(200)
+  })
+
+  test("should return 401 on login", async () => {
+    await request(app)
+      .post("/api/login")
+      .send({
+        email: "antonio.britto@gmail.com",
+        password: "123",
+      })
+      .expect(401)
   })
 })
