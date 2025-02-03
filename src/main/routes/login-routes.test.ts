@@ -1,11 +1,12 @@
 import request from "supertest"
 import app from "../config/app"
-import { Collection } from "mongodb"
 import { describe, test, beforeAll, afterAll, beforeEach } from "@jest/globals"
+import { Collection } from "mongodb"
 import { MongoHelper } from "../../infra/db/mongodb/helpers/mongo-helper"
+import { hash } from "bcrypt"
 
 let accountCollection: Collection
-describe("SignUp Routes", () => {
+describe("Login Routes", () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -18,14 +19,18 @@ describe("SignUp Routes", () => {
     accountCollection = await MongoHelper.getCollection("accounts")
     await accountCollection.deleteMany({})
   })
-  test("should return 200 status code on sign up success", async () => {
+  test("should return 200 status code on login", async () => {
+    const password = await hash("123", 12)
+    await accountCollection.insertOne({
+      name: "Antonio",
+      email: "antonio.britto@gmail.com",
+      password,
+    })
     await request(app)
-      .post("/api/signup")
+      .post("/api/login")
       .send({
-        name: "Antonio",
         email: "antonio.britto@gmail.com",
         password: "123",
-        passwordConfirmation: "123",
       })
       .expect(200)
   })
