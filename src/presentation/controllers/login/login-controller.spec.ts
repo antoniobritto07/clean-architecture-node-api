@@ -1,5 +1,5 @@
 import { describe, expect, test, jest } from "@jest/globals"
-import { LoginController } from "./login"
+import { LoginController } from "./login-controller"
 import {
   badRequest,
   serverError,
@@ -12,7 +12,7 @@ import {
   Authentication,
   Validation,
   AuthenticationModel,
-} from "./login-protocols"
+} from "./login-controller-protocols"
 
 //the difference between mockImplementationOnce and mockReturnValueOnce is that the first one tries to
 //all the structure of the return of the method. whereas the second one only change what is being returned.

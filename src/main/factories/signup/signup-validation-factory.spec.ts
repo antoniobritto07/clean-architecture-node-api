@@ -1,11 +1,10 @@
 import { describe, expect, test, jest } from "@jest/globals"
 import {
   RequiredFieldValidation,
-  CompareFieldValidation,
   EmailValidation,
   ValidationComposite,
 } from "../../../presentation/helpers/validators"
-import { makeSignUpValidation } from "../signup/signup-validation"
+import { makeLoginValidation } from "../login/login-validation-factory"
 import { Validation } from "../../../presentation/protocols/validation"
 import { EmailValidator } from "../../../presentation/protocols/email-validator"
 
@@ -20,17 +19,14 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
-describe("SignUpValidation Factory", () => {
+describe("LoginValidation Factory", () => {
   test("should call ValidationComposite with all validations", () => {
-    makeSignUpValidation()
+    makeLoginValidation()
     const validations: Validation[] = []
-    for (const field of ["name", "email", "password", "passwordConfirmation"]) {
+    for (const field of ["email", "password"]) {
       validations.push(new RequiredFieldValidation(field))
     }
 
-    validations.push(
-      new CompareFieldValidation("password", "passwordConfirmation"),
-    )
     validations.push(new EmailValidation("email", makeEmailValidator()))
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })

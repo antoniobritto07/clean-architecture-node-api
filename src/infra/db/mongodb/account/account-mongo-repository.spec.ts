@@ -7,7 +7,7 @@ import {
   afterAll,
   beforeEach,
 } from "@jest/globals"
-import { AccountMongoRepository } from "./account"
+import { AccountMongoRepository } from "./account-mongo-repository"
 import { Collection } from "mongodb"
 
 let accountCollection: Collection
