@@ -9,13 +9,11 @@ import { AddAccount } from "../../../domain/usecases/add-account"
 
 export class SignUpController implements Controller {
   //this implements() forces all the controllers to follow the same pattern
-  private readonly addAccount: AddAccount
-  private readonly validation: Validation
-
-  constructor(addAccount: AddAccount, validation: Validation) {
+  constructor(
+    private readonly addAccount: AddAccount,
+    private readonly validation: Validation,
+  ) {
     //example of dependency inversion
-    this.addAccount = addAccount
-    this.validation = validation
   }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
