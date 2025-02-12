@@ -3,7 +3,7 @@ version: "3"
 services:
   mongo: # container
     container_name: mongo-container
-    image: mongo:3 # imagem que irá ser contida pelo container (nesse caso está baixando uma imagem da internet)
+    image: mongo:7 # imagem que irá ser contida pelo container (nesse caso está baixando uma imagem da internet)
     restart: always
     # volumes serve para nao perdermos dados quando container for desligado
     # entao ele irá basicamente mapear as coisas numa pasta local /data, e depois 
@@ -21,6 +21,8 @@ services:
     image: clean-node-api # nesse caso o image nao vai servir para baixar nada da internet, mas sim para dar um nome para a imagem do projeto
     restart: always
     command: npm start # comando que será executado quando o container for iniciado
+    environment:
+      MONGO_URL: mongodb://mongo:27017/clean-node-api
     volumes:
       - ./dist:/usr/src/clean-node-api/dist # manda diretório dist local para diretório do container
     ports:
