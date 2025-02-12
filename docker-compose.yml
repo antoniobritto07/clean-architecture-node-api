@@ -1,0 +1,29 @@
+version: "3"
+# services sao os containers que vamos utilizar 
+services:
+  mongo: # container
+    container_name: mongo-container
+    image: mongo:3 # imagem que irá ser contida pelo container (nesse caso está baixando uma imagem da internet)
+    restart: always
+    # volumes serve para nao perdermos dados quando container for desligado
+    # entao ele irá basicamente mapear as coisas numa pasta local /data, e depois 
+    # mapear esta com a pasta remota do docker /data/db
+    # isso basicamente entao significa, quando rodar o container, ele irá criar a pasta 
+    # local e persistir os dados dentro da pasta local. Entao nao perderá os dados que vao ficar guardados nesse container
+    volumes:
+      - ./data:/data/db
+    # porta do mongo para porta do mongo no docker (liberando elas tanto localmente como no docker e fazendo o mapeamento delas)
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api_container
+    build: . # diferente de baixar uma imagem da internet, vamos usar a imagem do nosso projeto que foi criada pelo arquivo Dockerfile
+    image: clean-node-api # nesse caso o image nao vai servir para baixar nada da internet, mas sim para dar um nome para a imagem do projeto
+    restart: always
+    command: npm start # comando que será executado quando o container for iniciado
+    volumes:
+      - ./dist:/usr/src/clean-node-api/dist # manda diretório dist local para diretório do container
+    ports:
+      - "5050:5050" # definindo a porta aqui podemos retirar a linha EXPOSE PORT do arquivo Dockerfile
+    links:
+      - mongo
