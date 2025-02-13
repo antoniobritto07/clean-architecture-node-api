@@ -23,8 +23,8 @@ services:
     restart: always
     environment:
       MONGO_URL: mongodb://mongo:27017/clean-node-api
-    volumes:
-      - ./dist:/usr/src/clean-node-api/dist # manda diretório dist local para diretório do container
+    volumes: # esses volumes são super importantes para termos de cache
+      - ./dist/:/usr/src/clean-node-api/dist/ # manda diretório dist local para diretório do container
       - ./package.json:/usr/src/clean-node-api/package.json
     ports:
       - "5050:5050" # definindo a porta aqui podemos retirar a linha EXPOSE PORT do arquivo Dockerfile

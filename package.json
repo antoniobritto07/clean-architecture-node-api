@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/main/server.js",
+    "start": "nodemon -L --watch ./dist ./dist/main/server.js",
+    "docker:watch": "npx tsc -w",
     "build": "rimraf dist && tsc",
     "dev": "sucrase-node src/main/server.ts",
     "up": "npm run build && docker-compose up -d",
@@ -59,6 +60,7 @@
     "husky": "^9.1.7",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.12.0",
+    "nodemon": "^3.1.9",
     "validator": "^13.12.0"
   },
   "engines": {
