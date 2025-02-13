@@ -17,14 +17,15 @@ services:
       - "27017:27017"
   api:
     container_name: api_container
-    build: . # diferente de baixar uma imagem da internet, vamos usar a imagem do nosso projeto que foi criada pelo arquivo Dockerfile
-    image: clean-node-api # nesse caso o image nao vai servir para baixar nada da internet, mas sim para dar um nome para a imagem do projeto
+    image: node:22 # nesse caso o image nao vai servir para baixar nada da internet, mas sim para dar um nome para a imagem do projeto
+    working_dir: /usr/src/clean-node-api
+    command: bash -c "npm install --only=prod && npm run start" # junta script antigo do DockerFile com o start do projeto
     restart: always
-    command: npm start # comando que será executado quando o container for iniciado
     environment:
       MONGO_URL: mongodb://mongo:27017/clean-node-api
     volumes:
       - ./dist:/usr/src/clean-node-api/dist # manda diretório dist local para diretório do container
+      - ./package.json:/usr/src/clean-node-api/package.json
     ports:
       - "5050:5050" # definindo a porta aqui podemos retirar a linha EXPOSE PORT do arquivo Dockerfile
     links:
